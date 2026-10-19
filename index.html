@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricardo | Portfólio de Desenvolvimento de Sistemas</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Cabeçalho -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="#inicio" class="logo"><span>&lt;/&gt;</span> Meu Portifólio  </a>
+      <button id="botaoMenu" aria-label="Abrir menu de navegação" aria-expanded="false">☰</button>
+      <nav id="menu" class="nav-menu">
+        <a href="#inicio">Início</a>
+        <a href="#projetos">Eu</a>
+        <a href="#habilidades">Habilidades</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    
+    <!-- Seção Hero / Apresentação -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <span class="badge">Estudante de Desenvolvimento de Sistemas</span>
+          <h1>Olá, eu sou o Ricardo</h1>
+          <p>Sempre superando meus Limites.</p>
+          <div class="hero-actions">
+            <a href="#projetos" class="btn btn-primary">Veja um pouco sobre mim</a>
+            <a href="#contato" class="btn btn-outline">Entre em contato</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="assets/portfolio-hero.png" alt="Ilustração de desenvolvimento de software e interfaces" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Projetos -->
+    <section id="projetos" class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Um pouco sobre mim</h2>
+          <p>Conheça algumas das coisas que faço  </p>
+        </div>
+
+        <div class="filtros">
+          <button class="filtro ativo" data-filtro="todos">Todos</button>
+          <button class="filtro" data-filtro="site">Amigos</button>
+          <button class="filtro" data-filtro="app">Minha Rotina</button>
+          <button class="filtro" data-filtro="design">Lugares que já Fui</button>
+        </div>
+
+        <div class="grade-projetos">
+          <article class="projeto-card" data-categoria="site">
+            <div class="projeto-capa"><span>Meus amigos</span></div>
+            <div class="projeto-corpo">
+              <h3>Meus amigos</h3>
+              <p>Aqui mostro um pouco dos meus amigos e de como eles são.</p>
+              <div class="tags"><span>HTML</span><span>CSS</span></div>
+             <a href="galeria.html"> <button class="btn-card" type="button" >Conhecer meus amigos</button> </a>
+           
+            </div>
+          </article>
+
+          <article class="projeto-card" data-categoria="app">
+            <div class="projeto-capa"><span>Minha Rotina</span></div>
+            <div class="projeto-corpo">
+              <h3>Rotina do dia a dia</h3>
+              <p>Aqui mostro um pouco doque faço no meu dia.</p>
+              <div class="tags"><span>JavaScript</span><span>DOM</span></div>
+              <button class="btn-card" type="button" data-projeto="rotina">Ver minha rotina</button>
+            </div>
+          </article>
+
+          <article class="projeto-card" data-categoria="design">
+            <div class="projeto-capa"><span>Lugares que já fui</span></div>
+            <div class="projeto-corpo">
+              <h3>Fotos de Luares onde já fui</h3>
+              <p>Lugares onde já visitei com meus amigos e familiares.</p>
+              <div class="tags"><span>UI/UX</span><span>CSS Grid</span></div>
+              <button class="btn-card" type="button" data-projeto="lugares">Conhecer os lugares</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Habilidades -->
+    <section id="habilidades" class="section bg-light">
+      <div class="container">
+        <div class="section-header">
+          <h2>Habilidades Técnicas</h2>
+          <p>Tecnologias e conceitos que venho estudando e aplicando na prática.</p>
+        </div>
+        <div class="grade-habilidades">
+          <div class="habilidade-card">
+            <h3>HTML Semântico</h3>
+            <p>Estruturação de páginas acessíveis e otimizadas para motores de busca.</p>
+          </div>
+          <div class="habilidade-card">
+            <h3>CSS Moderno</h3>
+            <p>Uso de Flexbox, CSS Grid, variáveis e design responsivo (Mobile First).</p>
+          </div>
+          <div class="habilidade-card">
+            <h3>JavaScript</h3>
+            <p>Lógica de programação, manipulação de eventos e integração dinâmica.</p>
+          </div>
+          <div class="habilidade-card">
+            <h3>Controle de Versão</h3>
+            <p>Conceitos básicos de versionamento de código e organização de projetos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seção de Contato -->
+    <section id="contato" class="section contato-section">
+      <div class="container contato-grid">
+        <div class="contato-info">
+          <h2>Vamos trabalhar juntos?</h2>
+          <p>Estou aberto a oportunidades de estágio, parcerias em projetos e trocas de conhecimento na área de tecnologia.</p>
+          <a href="mailto:ricardoafonso863@email.com" class="btn btn-primary">Enviar um e-mail</a>
+        </div>
+        <div class="contato-links">
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
+          <a href="https://www.instagram.com/rickyk.vyolet/" target="_blank" rel="noopener">Instagram <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Ricardo. Desenvolvido com HTML, CSS e JavaScript.</p>
+    </div>
+  </footer>
+  <div class="modal" id="modalProjeto" role="dialog" aria-modal="true" aria-labelledby="modalTitulo" aria-hidden="true">
+    <div class="modal-conteudo">
+      <button class="modal-fechar" type="button" aria-label="Fechar janela">&times;</button>
+      <p class="modal-etiqueta">Portfólio pessoal</p>
+      <h2 id="modalTitulo"></h2>
+      <p id="modalTexto"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

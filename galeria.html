@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria de Molduras & Módulos - Colar de Pérola</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            cinzel: ['Cinzel', 'serif'],
+            montserrat: ['Montserrat', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              purple: '#7e22ce',
+              darkPurple: '#3b0764',
+              lightPurple: '#f3e8ff',
+              black: '#09090b'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estilos das molduras customizadas em Preto e Roxo */
+    .ornate-frame {
+      border: 14px solid transparent;
+      border-image: linear-gradient(45deg, #09090b 0%, #a855f7 25%, #3b0764 50%, #c084fc 75%, #09090b 100%) 1;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .ornate-frame-classic {
+      border: 12px double #3b0764;
+      outline: 4px solid #a855f7;
+      outline-offset: -8px;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.2), 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .ornate-frame-gold {
+      border: 12px solid #7e22ce;
+      outline: 3px dashed #09090b;
+      outline-offset: -6px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Custom Scrollbar Roxo */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #18181b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7e22ce;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #9333ea;
+    }
+
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      .module-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 2rem !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+      }
+      body {
+        background: white !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 min-h-screen text-zinc-100 font-sans pb-16">
+
+  <header class="sticky top-0 z-40 bg-zinc-900/95 backdrop-blur-md border-b border-purple-900/40 shadow-md py-4 px-4 sm:px-8 mb-8 no-print">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+      <div>
+        <h1 class="text-lg md:text-xl font-bold tracking-tight text-white font-serif uppercase flex items-center gap-2">
+          <i class="fa-solid fa-gem text-purple-500"></i>
+          Minha-Party
+        </h1>
+        <p class="text-xs text-zinc-400 mt-0.5">Aqui falo um pouco sobre mim e sobre meus amigos  .</p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openGlobalSettings()" class="text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3.5 py-2 rounded-lg font-medium transition flex items-center gap-1.5 border border-purple-900/50">
+          <i class="fa-solid fa-sliders text-purple-400"></i>
+          <span>Estilo Moldura</span>
+        </button>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-3 sm:px-6 space-y-8" id="modules-container">
+    <!-- Módulos injetados via JS -->
+  </main>
+
+  <footer class="max-w-5xl mx-auto text-center py-8 text-xs text-zinc-500 no-print">
+    <p>Painel Galeria de Módulos &copy; 2026 - Módulos Empilhados na Vertical</p>
+  </footer>
+
+  <div id="toast" class="fixed bottom-6 right-6 bg-zinc-900 border border-purple-500/30 text-white text-xs px-5 py-3 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 flex items-center gap-3 z-50 pointer-events-none">
+    <i class="fa-solid fa-circle-check text-purple-400 text-base" id="toast-icon"></i>
+    <span id="toast-message">Alterações salvas com sucesso!</span>
+  </div>
+
+  <div id="settings-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 no-print">
+    <div class="bg-zinc-900 rounded-2xl max-w-md w-full p-6 shadow-2xl border border-purple-900/50 relative text-zinc-100">
+      <button onclick="closeGlobalSettings()" class="absolute top-4 right-4 text-zinc-400 hover:text-white">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <h3 class="text-base font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+        <i class="fa-solid fa-sliders text-purple-400"></i> Estilo da Moldura
+      </h3>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-zinc-400 mb-2">Escolha o Estilo da Borda Preto/Roxo:</label>
+          <div class="grid grid-cols-1 gap-2">
+            <button onclick="setGlobalFrameStyle('ornate-frame')" class="p-3 text-left border border-zinc-800 rounded-xl hover:border-purple-500 text-xs font-medium flex items-center justify-between transition bg-zinc-950">
+              <span>1. Moldura Luxo Gradiente Roxo & Preto</span>
+              <span class="w-4 h-4 rounded-full border-2 border-purple-500 bg-zinc-900"></span>
+      <div class="mt-6 flex justify-end">
+        <button onclick="closeGlobalSettings()" class="bg-purple-700 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-purple-600 transition">
+          Concluído
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Input de arquivo invisível para uploads de imagem -->
+  <input type="file" id="global-file-input" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+  <script>
+    // Imagens para rápida seleção
+    const PRESET_IMAGES = [
+      'assets/Eu.png',
+      'assets/Abel.png',
+      'assets/David.png',
+      'assets/Matheus_P.png',
+      'assets/Enzo.png',
+      'assets/Albertino.png',
+      'assets/Lucas_Dias.png',
+      'assets/Melissa.Almeida.png',
+      'assets/Lucca.png',
+      'assets/Pedro.png',
+      'assets/Prof.Patrick.png'
+    ];
+
+    // Lista de textos para cada item 
+    const descricao_img = [
+      'Goat farmador de aura infinita',
+      'Abel - É um cara legal e muito bem arrumado até, gosto bastante de conversar com ele e jogar ping-pong. ',
+      'Um dos meu melhores amigos e que sei que posso contar com ele.',
+      'Ele é meio esquisito mas é um cara legal que gosta de ficar jogando(Jogo de peixe ainda por cima).',
+      'Um cara simples que precisa de ajuda quase que toda hora mas é sempre bom ter ele por perto nos intervalos quando ele falta todo mundo fica um pouca para baixo.',
+      'caixa de texto Albertino',
+      'ele é um cara legal e bem engraçado as conversas com ele sempre são bem interativas e divertidas.',
+      'caixa de texto Melissa.Almeida',
+      'Beta sem aura',
+      'caixa de texto Pedro',
+      'caixa de texto P'
+    ];
+    const title_img = [
+      ' - Ricardo',
+      ' - Abel',
+      ' - David',
+      ' - Matheus.P',
+      ' - Enzo',
+      ' - Albertino',
+      ' - Lucas.Dias',
+      ' - Melissa.Almeida',
+      ' - Lucca',
+      ' - Pedro',
+      ' - Prof.Patrick'
+    ];    
+
+    let currentFrameStyle = 'ornate-frame';
+    let targetUploadModuleId = null;
+
+    // Inicialização dos módulos com dados das consts
+    let modulesData = Array.from({ length: 11 }, (_, index) => {
+      const id = index + 1;
+      return {
+        id: id,
+        photoUrl: PRESET_IMAGES[index] || PRESET_IMAGES[0],
+        photoLabel: '', 
+        boxHeader: title_img[index] || 'Descrição padrão para o módulo.',
+        textBody: descricao_img[index] || 'Descrição padrão para o módulo.',
+        fontFamily: 'font-sans',
+        textAlign: 'text-left'
+      };
+    });
+
+    function renderModules() {
+      const container = document.getElementById('modules-container');
+      container.innerHTML = '';
+
+      modulesData.forEach((module, index) => {
+        const moduleElement = document.createElement('div');
+        moduleElement.className = 'module-card bg-zinc-900 rounded-2xl shadow-xl border border-zinc-800 overflow-hidden';
+        moduleElement.id = `module-card-${module.id}`;
+
+        moduleElement.innerHTML = `
+          <!-- Header do Módulo -->
+          <div class="bg-zinc-950/80 border-b border-zinc-800 px-6 py-3 flex items-center justify-between no-print">
+            <div class="flex items-center gap-2">
+              <span class="bg-purple-950 border border-purple-800/60 text-purple-300 font-bold text-xs px-2.5 py-1 rounded-md tracking-wider">MÓDULO #${module.id}</span>
+              <span class="text-xs font-semibold text-zinc-400 uppercase">
+            </div>
+              <button onclick="resetModule(${module.id})" class="text-[11px] text-zinc-500 hover:text-purple-400 p-1" title="Redefinir Módulo">
+                <i class="fa-solid fa-rotate-left"></i>
+              </button>
+            </div>
+
+          <!-- Conteúdo Principal -->
+          <div class="p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center">
+              
+              <!-- Coluna da Imagem -->
+              <div class="md:col-span-5 flex flex-col items-start">
+                <div class="w-full flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold text-purple-300 tracking-tight font-mono bg-zinc-950 px-2 py-0.5 rounded border border-purple-900/40">
+                    ${module.photoLabel}
+                  </span>
+                  <span class="text-[10px] text-zinc-500">Imagem ${module.id}/${modulesData.length}</span>
+                </div>
+
+                <div class="relative w-full aspect-[4/5] bg-zinc-950 rounded-xl overflow-hidden border border-zinc-800 shadow-inner group">
+                  <img id="photo-img-${module.id}" 
+                       src="${module.photoUrl}" 
+                       alt="Foto Módulo ${module.id}" 
+                       class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+
+
+                </div>
+              </div>
+
+              <!-- Coluna do Texto / Moldura -->
+              <div class="md:col-span-7 flex flex-col">
+  
+
+                <!-- Moldura de Exibição -->
+                <div class="${currentFrameStyle} frame-box p-6 sm:p-8 bg-zinc-950 min-h-[200px] flex flex-col justify-center transition-all duration-300" id="frame-box-${module.id}">
+                  <h2 class="text-xs uppercase tracking-widest text-purple-400 font-semibold mb-2">${module.boxHeader}</h2>
+                  <p id="text-display-${module.id}" class="${module.fontFamily} ${module.textAlign} text-zinc-200 text-base leading-relaxed font-medium">
+                    ${module.textBody}
+                  </p>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        `;
+
+        container.appendChild(moduleElement);
+      });
+    }
+
+    function triggerFileInput(moduleId) {
+      targetUploadModuleId = moduleId;
+      document.getElementById('global-file-input').click();
+    }
+
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (file && targetUploadModuleId !== null) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          setPresetPhoto(targetUploadModuleId, e.target.result);
+          showToast(`Foto do Módulo #${targetUploadModuleId} atualizada!`);
+        };
+        reader.readAsDataURL(file);
+      }
+      event.target.value = '';
+    }
+
+    function setPresetPhoto(moduleId, photoUrl) {
+      const module = modulesData.find(m => m.id === moduleId);
+      if (module) {
+        module.photoUrl = photoUrl;
+        const imgElem = document.getElementById(`photo-img-${moduleId}`);
+        if (imgElem) imgElem.src = photoUrl;
+      }
+    }
+
+    function updateModuleStyle(moduleId, key, value) {
+      const module = modulesData.find(m => m.id === moduleId);
+      if (module) {
+        module[key] = value;
+        const textElem = document.getElementById(`text-display-${moduleId}`);
+        if (textElem) {
+          if (key === 'fontFamily') {
+            textElem.className = textElem.className.replace(/font-(sans|serif|cinzel|montserrat)/g, value);
+          } else if (key === 'textAlign') {
+            textElem.className = textElem.className.replace(/text-(left|center|right)/g, value);
+          }
+        }
+      }
+    }
+
+    function setGlobalFrameStyle(styleClass) {
+      currentFrameStyle = styleClass;
+      modulesData.forEach(module => {
+        const frameBox = document.getElementById(`frame-box-${module.id}`);
+        if (frameBox) {
+          frameBox.className = frameBox.className.replace(/ornate-frame(-classic|-gold)?/g, styleClass);
+        }
+      });
+    }
+    function openGlobalSettings() {
+      document.getElementById('settings-modal').classList.remove('hidden');
+    }
+
+    function closeGlobalSettings() {
+      document.getElementById('settings-modal').classList.add('hidden');
+    }
+
+    function resetModule(moduleId) {
+      const index = moduleId - 1;
+      const module = modulesData.find(m => m.id === moduleId);
+      if (module) {
+        module.photoUrl = PRESET_IMAGES[index] || PRESET_IMAGES[0];
+        module.textBody = descricao_img[index] || 'Descrição do módulo.';
+        renderModules();
+        showToast(`Módulo #${moduleId} redefinido.`);
+      }
+    }
+
+    function saveAllData() {
+      try {
+        localStorage.setItem('pearl_gallery_modules', JSON.stringify(modulesData));
+        showToast("Módulos salvos com sucesso!");
+      } catch (e) {
+        showToast("Ação realizada!");
+      }
+    }
+
+    function loadSavedData() {
+      try {
+        const saved = localStorage.getItem('pearl_gallery_modules');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            modulesData = parsed;
+          }
+        }
+      } catch (e) {
+        console.log('Nenhum dado salvo previamente.');
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.innerText = message;
+
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    window.onload = function() {
+      loadSavedData();
+      renderModules();
+    };
+  </script>
+</body>
+</html>
